@@ -10,7 +10,7 @@ bool isBracket(char ch);
 int main()
 {
 	Stack stack(10);
-	std::string expression = "2+3-4";
+	std::string expression = "2+3*(4-5)";
 	std::string output = "";
 	std::cout << expression << std::endl;
 
@@ -33,7 +33,29 @@ int main()
 			{				
 				if (!stack.isEmpty())			
 				{
+					if (element == '(')
+					{
+						stack.push(element);
+						continue;
+					}
+					else if (element == ')')
+					{
+						char el = stack.pop();
+						while (el != '(' && !stack.isEmpty())
+						{
+							output.push_back(el);
+							el = stack.pop();
+						}
+						continue;
+					}
+
 					char opTop = stack.pop();
+					if (opTop == '(')
+					{
+						stack.push(opTop);
+						stack.push(element);
+						continue;
+					}
 					char opThis = element;
 					if (!priority_less_then(opTop, opThis))
 					{
