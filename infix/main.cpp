@@ -5,7 +5,6 @@
 bool isOperand(char ch);
 bool isOperator(char ch);
 bool priority_less_then(char opTop, char opThis);
-bool isBracket(char ch);
 
 int main()
 {
@@ -101,15 +100,6 @@ bool priority_less_then(char opTop, char opThis)
 {
 	if ((opTop == '+' || opTop == '-') 
 		&& (opThis == '*' || opThis == '/'))
-	{
-		return true;
-	}
-	return false;
-}
-
-bool isBracket(char ch)
-{
-	if (ch == '(' || ch == ')')
 	{
 		return true;
 	}
