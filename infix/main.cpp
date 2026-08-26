@@ -14,8 +14,6 @@ int main()
 	std::string output = "";
 	std::cout << expression << std::endl;
 
-	std::cout << "is opTop less then opThis: " << priority_less_then('*', '+') << std::endl;
-
 	for (int i = 0; i < expression.size(); i++)
 	{
 		char element = expression[i];
