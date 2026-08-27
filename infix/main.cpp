@@ -6,10 +6,11 @@ bool isOperand(char ch);
 bool isOperator(char ch);
 int precedence(char op);
 void processOperator(Stack& stack, std::string& output, char opThis);
+void processClosingParenthesis(Stack& stack, std::string& output);
 
 int main()
 {
-    std::string expression = "2+3";
+    std::string expression = "2+3*(4-5)";
     std::string output;
 
     Stack stack(expression.size());
@@ -28,12 +29,7 @@ int main()
         }
         else if (element == ')')
         {
-            while (!stack.isEmpty())
-            {
-                char opTop = stack.pop();
-                if (opTop == '(') break;
-                output.push_back(opTop);
-            }
+            processClosingParenthesis(stack, output);
         }
         else if (isOperator(element))
         {
@@ -94,4 +90,14 @@ void processOperator(Stack& stack, std::string& output, char opThis)
 	}
 
 	stack.push(opThis);
+}
+
+void processClosingParenthesis(Stack& stack, std::string& output)
+{
+    while (!stack.isEmpty())
+    {
+        char opTop = stack.pop();
+        if (opTop == '(') break;
+        output.push_back(opTop);
+    }
 }
