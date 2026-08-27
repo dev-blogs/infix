@@ -9,7 +9,7 @@ bool priority_less_then(char opTop, char opThis);
 int main()
 {
 	Stack stack(10);
-	std::string expression = "2+3*(4-5)";
+	std::string expression = "2+3*4-5";
 	std::string output = "";
 	std::cout << expression << std::endl;
 
@@ -20,54 +20,52 @@ int main()
 		{
 			output.push_back(element);
 		}
+		else if (stack.isEmpty())
+		{
+			stack.push(element);
+		}
 		else
 		{
-			if (stack.isEmpty())
+			if (element == '(')
 			{
 				stack.push(element);
+				continue;
+			}
+
+			if (element == ')')
+			{
+				char el = stack.pop();
+				while (el != '(' && !stack.isEmpty())
+				{
+					output.push_back(el);
+					el = stack.pop();
+				}
+				continue;
+			}
+
+			char opTop = stack.pop();
+			char opThis = element;
+
+			if (opTop == '(')
+			{
+				stack.push(opTop);
+				stack.push(element);
+				continue;
+			}
+			
+			if (!priority_less_then(opTop, opThis))
+			{
+				output.push_back(opTop);						
+				stack.push(opThis);
 			}
 			else
-			{				
-				if (!stack.isEmpty())			
-				{
-					if (element == '(')
-					{
-						stack.push(element);
-						continue;
-					}
-					else if (element == ')')
-					{
-						char el = stack.pop();
-						while (el != '(' && !stack.isEmpty())
-						{
-							output.push_back(el);
-							el = stack.pop();
-						}
-						continue;
-					}
-
-					char opTop = stack.pop();
-					if (opTop == '(')
-					{
-						stack.push(opTop);
-						stack.push(element);
-						continue;
-					}
-					char opThis = element;
-					if (!priority_less_then(opTop, opThis))
-					{
-						output.push_back(opTop);						
-						stack.push(opThis);
-					}
-					else
-					{
-						stack.push(opTop);
-						stack.push(opThis);
-					}
-				}				
-			}
+			{
+				stack.push(opTop);
+				stack.push(opThis);
+			}				
 		}
 	}
+
 	while (!stack.isEmpty())
 	{
 		output.push_back(stack.pop());
