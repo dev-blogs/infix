@@ -7,10 +7,13 @@ bool isOperator(char ch);
 int precedence(char op);
 void processOperator(Stack& stack, std::string& output, char opThis);
 void processClosingParenthesis(Stack& stack, std::string& output);
+int calculate(std::string& postfix_expr, Stack& stack);
+int charToInt(char ch);
+char intToChar(int value);
 
 int main()
 {
-    std::string expression = "2+3*(4-5)";
+    std::string expression = "2+3*(4+5)";
     std::string output;
 
     Stack stack(expression.size());
@@ -44,7 +47,54 @@ int main()
 
     std::cout << "output: " << output << std::endl;
 
+    int result = calculate(output, stack);
+    std::cout << "Result is: " << result << std::endl;
+
     return 0;
+}
+
+int calculate(std::string& postfix_expr, Stack& stack)
+{
+	for (char element : postfix_expr)
+	{
+		if (isOperand(element))
+		{
+			stack.push(element);
+			continue;
+		}
+
+		int b = charToInt(stack.pop());
+		int a = charToInt(stack.pop());		
+
+		if (element == '+')
+		{
+			stack.push(intToChar(a + b));
+		}
+		else if (element == '-')
+		{
+			stack.push(intToChar(a - b));
+		}
+		else if (element == '*')
+		{
+			stack.push(intToChar(a * b));
+		}
+		else if (element == '/')
+		{
+			stack.push(intToChar(a / b));
+		}
+	}
+
+	return charToInt(stack.pop());
+}
+
+int charToInt(char ch)
+{
+	return ch - '0';
+}
+
+char intToChar(int value)
+{
+	return char(value + '0');
 }
 
 bool isOperand(char ch)
