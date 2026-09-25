@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "stack.h"
+#include "LinkedList.h"
 
 bool isOperand(char ch);
 bool isOperator(char ch);
@@ -16,7 +17,7 @@ int main()
     std::string expression = "2+3*(4+5)";
     std::string output;
 
-    Stack stack(expression.size());
+    Stack stack;
 
     std::cout << expression << std::endl;
 

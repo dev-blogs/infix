@@ -1,13 +1,14 @@
 #pragma once
+#include "LinkedList.h"
 
 class Stack
 {
 private:
-	char* data;
+	LinkedList* data;
 	int index;
 	int capacity;
 public:
-	Stack(int size);
+	Stack();
 	~Stack();
 	void push(char ch);
 	char pop();

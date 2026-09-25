@@ -1,42 +1,38 @@
 #include "Stack.h"
+#include "LinkedList.h"
 #include <stdexcept>
 
-Stack::Stack(int capacity) 
-	: index(0), capacity(capacity)
+Stack::Stack()
 {
-	data = new char[capacity];
+	data = new LinkedList();
 }
 
 Stack::~Stack()
 {
-	delete[] data;
+	delete data;
 }
 
 void Stack::push(char value)
 {
-	if (index == capacity)
-	{
-		throw std::runtime_error("Stack is full");
-	}
-	data[index++] = value;
+	data->insertFirst(value);
 }
 
 char Stack::pop()
 {
-	if (index == 0)
+	if (data->isEmpty())
 	{
 		throw std::runtime_error("Stack is empty");
 	}
-	return data[--index];
+	return data->deleteFirst();
 }
 
 char Stack::top()
 {
-	if (index == 0)
+	if (data->isEmpty())
 	{
 		throw std::runtime_error("Stack is empty");
 	}
-	return data[index - 1];
+	return data->printTop();
 }
 
 int Stack::size()
@@ -46,5 +42,5 @@ int Stack::size()
 
 bool Stack::isEmpty()
 {
-	return index == 0;
+	return data->isEmpty();
 }
