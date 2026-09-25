@@ -5,8 +5,6 @@ class Stack
 {
 private:
 	LinkedList* data;
-	int index;
-	int capacity;
 public:
 	Stack();
 	~Stack();
@@ -14,6 +12,5 @@ public:
 	char pop();
 	char top();
 	bool isEmpty();
-	int size();
 };
 

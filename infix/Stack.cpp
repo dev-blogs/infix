@@ -35,11 +35,6 @@ char Stack::top()
 	return data->printTop();
 }
 
-int Stack::size()
-{
-	return index;
-}
-
 bool Stack::isEmpty()
 {
 	return data->isEmpty();
